@@ -29,7 +29,13 @@ set(SOURCES
 	PluginTest.cpp
 )
 
+add_library(jucedll SHARED)
+target_compile_options(jucedll PRIVATE -DJUCE_DLL_BUILD)
+target_link_libraries(jucedll ${JUCE_LIBRARIES})
+
 add_executable(PluginTest PluginTest.cpp)
-target_include_directories(PluginTest PUBLIC midikraft-behringer-rd8)
-target_link_libraries(PluginTest midikraft-base juce-utils ${JUCE_LIBRARIES})
+target_compile_options(PluginTest PRIVATE -DJUCE_DLL)
+target_include_directories(PluginTest PUBLIC midikraft-behringer-rd8 ${JUCE_INCLUDES})
+message(${CMAKE_CURRENT_BINARY_DIR}/Debug)
+target_link_libraries(PluginTest PRIVATE midikraft-base juce-utils ${CMAKE_CURRENT_BINARY_DIR}/Debug/jucedll.lib)
 
