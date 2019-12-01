@@ -1,22 +1,22 @@
 #include "RD8.h"
 
-#include <windows.h>
+#include "JuceHeader.h"
 
 typedef  midikraft::BehringerRD8 *(*createFunctionType)();
 
 int main() {
 
-	HMODULE myDLL = ::LoadLibrary("midikraft-behringer-rd8.dll");
+	DynamicLibrary rd8_plugin("RD8");
 
-	if (myDLL) {
-		auto createFn = (createFunctionType) ::GetProcAddress(myDLL, "CreateObjectInstance");
+	if (rd8_plugin.open("midikraft-behringer-rd8.dll")) {
+		auto createFn = (createFunctionType)rd8_plugin.getFunction("CreateObjectInstance");
 
 		if (createFn) {
 			auto *created = (*createFn)();
 			std::cout << created->getName();
 		}
 
-		::FreeLibrary(myDLL);
+		rd8_plugin.close();
 	}
 
 	return 0;
