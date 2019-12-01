@@ -3,6 +3,7 @@
 #include "JuceHeader.h"
 
 typedef  midikraft::BehringerRD8 *(*createFunctionType)();
+typedef  void (*deleteFunctionType)(midikraft::BehringerRD8 *);
 
 int main() {
 
@@ -14,6 +15,12 @@ int main() {
 		if (createFn) {
 			auto *created = (*createFn)();
 			std::cout << created->getName();
+
+			auto deleteFn = (deleteFunctionType)rd8_plugin.getFunction("ReleaseObject");
+
+			if (deleteFn) {
+				(*deleteFn)(created);
+			}
 		}
 
 		rd8_plugin.close();
