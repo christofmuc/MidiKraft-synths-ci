@@ -15,4 +15,21 @@ add_subdirectory(juce-utils)
 add_subdirectory(MidiKraft-base)
 add_subdirectory(MidiKraft-behringer-rd8)
 
+SET(JUCE_DIR_HINT "${CMAKE_CURRENT_LIST_DIR}/third_party")
+find_package(JUCE REQUIRED 
+	COMPONENTS 
+		juce_core		
+		juce_events
+		juce_audio_basics
+		juce_audio_devices
+		juce_data_structures
+)
+
+set(SOURCES
+	PluginTest.cpp
+)
+
+add_executable(PluginTest PluginTest.cpp)
+target_include_directories(PluginTest PUBLIC midikraft-behringer-rd8)
+target_link_libraries(PluginTest midikraft-base juce-utils ${JUCE_LIBRARIES})
 
