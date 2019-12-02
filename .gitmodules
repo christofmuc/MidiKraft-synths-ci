@@ -13,3 +13,6 @@
 [submodule "juce-utils"]
 	path = juce-utils
 	url = https://github.com/christofmuc/juce-utils.git
+[submodule "MidiKraft-sequential-rev2"]
+	path = MidiKraft-sequential-rev2
+	url = https://github.com/christofmuc/MidiKraft-sequential-rev2.git
