@@ -35,5 +35,5 @@ ENDIF()
 set(PYBIND11_PYTHON_VERSION 3.6)
 add_subdirectory(third_party/pybind11)
 
-add_subdirectory(PyTschirp)
+add_subdirectory(pytschirp)
 
