@@ -22,15 +22,16 @@ RUN cd / && wget https://github.com/Kitware/CMake/releases/download/v3.16.5/cmak
 RUN cd / && chmod +x /cmake-3.16.5-Linux-x86_64.sh && /cmake-3.16.5-Linux-x86_64.sh --skip-license && rm /cmake-3.16.5-Linux-x86_64.sh
 
 # For some reason, we do not have a proper CURL with SSL on Ubuntu
+# Download, compile, and install CURL
 RUN apt-get -y install libssl-dev
-COPY curl-7.67.0.tar.gz /root
-RUN cd /root && tar -xzf curl-7.67.0.tar.gz && cd curl-7.67.0 && ./configure --with-ssl && make -j4 && make install && ldconfig
-RUN rm /root/curl-7.67.0.tar.gz
+RUN cd /root && wget https://github.com/curl/curl/releases/download/curl-7_69_0/curl-7.69.0.tar.gz
+RUN cd /root && tar -xzf curl-7.69.0.tar.gz && cd curl-7.69.0 && ./configure --with-ssl && make -j4 && make install && ldconfig
+RUN rm /root/curl-7.69.0.tar.gz && rm -rf /root/curl-7.69.0
 
 RUN echo "cd /src && cmake -S . -B builds/LinuxBuilds -G 'Unix Makefiles' && cd builds/LinuxBuilds && make -j4" > /root/run_make.sh
 RUN chmod +x /root/run_make.sh
 
-#ENTRYPOINT /root/run_make.sh
+ENTRYPOINT /root/run_make.sh
 
 # Build the container via
 #
@@ -38,5 +39,5 @@ RUN chmod +x /root/run_make.sh
 # 
 # and then run it with 
 #
-# docker run --volume=//d/development/jammernetz:/src -it -p 7777:7777/udp --entrypoint=/bin/bash --rm <containerID>
+# docker run --volume=//d/development/jammernetz:/src -it --rm <containerID>
 #
