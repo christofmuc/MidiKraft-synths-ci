@@ -9,7 +9,7 @@ in isolation, as I really avoid nested submodules in my repositories.
 
 ## Usage
 
-This repository allows us to build the juce-utils library independantly in an easy way. First checkout recursively:
+This repository allows us to build the git submodules independantly in an easy way. First checkout recursively:
 
     git clone --recurse-submodules -j8 https://github.com/christofmuc/MidiKraft-synths-ci.git
 	
