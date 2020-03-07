@@ -20,6 +20,9 @@ IF (WIN32)
 	FetchContent_MakeAvailable(boost)
 ENDIF()
 
+# This definitely is required when building the PyTschirp python shared lib on Linux, but I guess it doesn't hurt
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 # We need a little bit support for the JUCE library, and also want to put our own CMake helpers on the module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/third_party/juce-cmake/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
